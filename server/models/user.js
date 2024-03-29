@@ -69,7 +69,7 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.generateAuthToken = function(){
     let user = this;
-    const userobj =  {sub:user._id.toHexString()}; // you can hash email too by adding any more after comma
+    const userobj =  {sub:user._id.toHexString(),email:user.email}; // you can hash email too by adding any more after comma
     const token = jwt.sign(userobj,process.env.DB_SECRET,{ expiresIn:'1d'});
     return token;
 }
@@ -90,6 +90,16 @@ userSchema.methods.comparePassword = async function(userPassword){
     return match;
 
 }
+
+//this one is for email
+userSchema.methods.generateRegisterToken = function(){
+    let user = this;
+    const userobj =  {sub:user._id.toHexString() }; 
+    const token = jwt.sign(userobj,process.env.DB_SECRET,{ expiresIn:'10h'});
+    return token;
+}
+
+
 
 
 

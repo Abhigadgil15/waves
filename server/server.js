@@ -7,8 +7,8 @@ const xss = require('xss-clean'); //middleware library to check if information i
 const mongoSanitize = require('express-mongo-sanitize');
 const routes = require('./routes');
 const { handleError, convertToApiError} = require('./middleware/apiError.js')
-
-
+const passport = require( 'passport' ); 
+const { jwtStrategy } = require('./middleware/passport.js')
 
 mongoose.connect(mongoUri)
         .then(() => {
@@ -30,6 +30,10 @@ app.use(xss());
 app.use(mongoSanitize());
 
 
+//passport : to check if user is uathenticated after signing in
+app.use(passport.initialize());
+passport.use('jwt', jwtStrategy) // here we can add different strategies. This strategy is only to check if token is correct. You can add multiple strategies here instead of jwtStrategy
+
 
 
 
@@ -45,6 +49,9 @@ app.use(convertToApiError);
 app.use((err,req,res,next) =>{
     handleError(err,res)
 })
+
+
+
 
 
 

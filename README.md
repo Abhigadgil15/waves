@@ -21,3 +21,9 @@ Installations :-
 
 - npm install --save validator
 (To validate data)
+
+- npm i nodemailer
+(to make connections to email)
+
+-npm install mailgen --save
+(to make templates for different email applications -install if not already installed)
