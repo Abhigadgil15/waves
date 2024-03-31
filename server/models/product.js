@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const aggregatePaginate = require('mongoose-aggregate-paginate-v2');
 const Schema = mongoose.Schema;
 
 const productSchema = mongoose.Schema({
@@ -12,7 +12,7 @@ const productSchema = mongoose.Schema({
     brand:{
         type:Schema.Types.ObjectId,
         ref:'Brand', // this should be the name of the brand model you are referring to from brand.js
-        required:true,
+        required:true, /// by referencing to brand id, when we make a request a product. You can populate the brand_id from brand.js. By using the populate method it will return everything in doc thats related to brand_id. 
     },
     frets:{
         required:true,
@@ -57,6 +57,7 @@ const productSchema = mongoose.Schema({
         default:Date.now
     }
 })
+productSchema.plugin(aggregatePaginate);
 
 const Product = mongoose.model('Product',productSchema);
 

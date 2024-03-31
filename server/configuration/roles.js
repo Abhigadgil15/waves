@@ -9,8 +9,9 @@ const AllRights = {
 
 let grantsObject = {
     admin:{
-        profile: AllRights,
-        brand:AllRights
+        profile:AllRights,
+        brand:AllRights,
+        product:AllRights
 
     },
     user:{
@@ -19,6 +20,9 @@ let grantsObject = {
             'update:own':['*']
         },
         brand:{
+            'read:any':['*']
+        },
+        product:{
             'read:any':['*']
         }
     }
