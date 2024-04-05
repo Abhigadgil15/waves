@@ -4,20 +4,27 @@ import * as actions from './index';
 // config()
 axios.defaults.baseURL ='http://localhost:3001';
 //async functions dont return an object but we need async function to fetch the data. thats why we need thunk that acts as a middleware 
-export const productsBySort = () =>{
+export const productsBySort = ({limit,sortBy,order,where}) =>{
     return async(dispatch)=>{
     try{
         const products = await axios.get(`/api/products/all`, {
             params: {
-                limit: 2,
-                sortBy: 'price',
-                order: 'asc'
-            }
-        });
-        console.log(products.data)
-        dispatch(actions.productsBySold(products.data));
+                limit,
+                sortBy,
+                order
+        }});
+        switch(where){
+            case 'bySold':
+                dispatch(actions.productsBySold(products.data))
+            break;
+            case 'byDate':
+                dispatch(actions.productsByDate(products.data))
+            break;
+            default:
+                return false;
+        }
     } catch(error){
-        console.log(error)
+        dispatch(actions.successGlobal('Sorry someething happened try again'))
     }
 }
 }
