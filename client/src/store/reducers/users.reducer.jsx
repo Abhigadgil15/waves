@@ -1,4 +1,8 @@
-// import { MY_DOG } from "../types";
+import {
+    AUTH_USER
+} from '../types';
+
+
 
 let DEFAULT_USER_STATE = {
     data:{
@@ -15,7 +19,11 @@ let DEFAULT_USER_STATE = {
 
 export default function usersReducer(state=DEFAULT_USER_STATE,action){
     switch(action.type){
-                        // we want the existing state of the user having id as MY_DOG
+        case AUTH_USER:
+            return { ...state,
+               data: { ...state.data, ...action.payload.data },
+               auth: action.payload.auth
+            }
         default:
             return state
     }

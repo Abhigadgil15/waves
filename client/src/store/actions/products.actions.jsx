@@ -24,7 +24,7 @@ export const productsBySort = ({limit,sortBy,order,where}) =>{
                 return false;
         }
     } catch(error){
-        dispatch(actions.successGlobal('Sorry someething happened try again'))
+        dispatch(actions.errorGlobal('Sorry something happened try again'))
     }
 }
 }

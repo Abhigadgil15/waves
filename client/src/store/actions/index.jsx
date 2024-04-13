@@ -3,10 +3,25 @@ import { GET_PROD_BY_SOLD,
     GET_PROD_BY_DATE,
     ERROR_GLOBAL,
     SUCCESS_GLOBAL,
-    CLEAR_NOTIFICATIONS
+    CLEAR_NOTIFICATIONS,
+    AUTH_USER
 } 
     from "../types"
 
+////USERS
+
+export const userAuthenticate = (user) => (
+    {
+        type:AUTH_USER,
+        payload:user
+    }
+)
+
+
+
+
+
+///PRODUCTS
 export const productsBySold = (data) =>({
     type:GET_PROD_BY_SOLD,
     payload:data
