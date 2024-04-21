@@ -12,6 +12,5 @@ export const CLEAR_NOTIFICATIONS= 'clear_notifications';
 
 //users
 export const AUTH_USER = 'auth_user';
-
-
+export const SIGN_OUT = 'sign_out';
 

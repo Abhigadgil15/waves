@@ -36,7 +36,8 @@ app.use(passport.initialize());
 passport.use('jwt', jwtStrategy) // here we can add different strategies. This strategy is only to check if token is correct. You can add multiple strategies here instead of jwtStrategy
 
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: 'http://localhost:5173',
+    credentials: true
   }));
 
 

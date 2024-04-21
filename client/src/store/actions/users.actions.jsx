@@ -1,7 +1,9 @@
 import * as actions from './index';
 import axios from "axios"
+import { getAuthHeader ,removeTokenCookie,getTokenCookie} from '../../utils/tools';
 
 axios.defaults.baseURL ='http://localhost:3001';
+axios.defaults.headers.post['Content-Type']='application/json'
 export const userRegister = (values) => {
     return async(dispatch)=>{
         try{
@@ -16,5 +18,52 @@ export const userRegister = (values) => {
             dispatch(actions.errorGlobal(error.response.data.message))
 
         }
+    }
+}
+
+export const userSignIn = (values) => {
+    return async(dispatch)=>{
+        try{
+            const user = await axios.post(`/api/auth/signin`,{
+                email:values.email, 
+                password:values.password
+            }, 
+            {
+                withCredentials: true // Ensure credentials are sent with the request
+            });
+            dispatch(actions.userAuthenticate({data: user.data.user,auth: true}))
+            
+            dispatch(actions.successGlobal('Welcome !!'))
+        } catch(error){
+            dispatch(actions.errorGlobal(error.response.data.message))
+
+        }
+    }
+}
+
+export const userisAuth = () =>{
+    return async(dispatch) =>{
+        try{
+            if(!getTokenCookie()){
+                throw new Error();
+            }
+            const user = await axios.get(`/api/auth/isauth`, getAuthHeader());
+            
+            console.log(user);
+            dispatch(actions.userAuthenticate({data:user.data,auth:true}))
+        }
+        catch(error){
+            dispatch(actions.userAuthenticate({data:{},auth:false}))
+        }
+    }
+
+}
+
+//we can also create a model to handle tokens in case the token is incorrect or the token is flagged or expired
+export const userSignOut = () => {
+    return async(dispatch)=>{
+        removeTokenCookie();
+        dispatch(actions.userSignOut())
+        dispatch(actions.successGlobal('Logged Out!!'))
     }
 }

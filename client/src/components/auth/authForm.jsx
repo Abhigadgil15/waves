@@ -7,7 +7,7 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import {errorHelper} from'../../utils/tools'
-import { userRegister } from '../../store/actions/users.actions';
+import { userRegister,userSignIn } from '../../store/actions/users.actions';
 
 const AuthForm = (props) =>{
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ const AuthForm = (props) =>{
     const dispatch =useDispatch();
 
     const formik = useFormik({
-        initialValues:{ email:'francis123@gmail.com',password:'testing123' },
+        initialValues:{ email:'francis@gmail.com',password:'testing123' },
         validationSchema:Yup.object({
             email:Yup.string()
             .required('Sorry the email is required')
@@ -35,12 +35,15 @@ const AuthForm = (props) =>{
             dispatch(userRegister(values))
         } else {
             ///// sign in
+            dispatch(userSignIn(values))
         }
 
     }
     useEffect(()=>{
         if(notifications && notifications.success)
             navigate('/dashboard')
+        else
+            setLoading(false);
     },[notifications])
 
 

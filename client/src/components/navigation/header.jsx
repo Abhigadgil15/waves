@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = () =>{
+const Header = ({users, signOutUser}) => {
+
     return(
         <header className="bck_b_light">
             <div className="container">
@@ -12,38 +13,44 @@ const Header = () =>{
                 </div>
                 <div className="right">
                     <div className="top">
-                        <>
-                        <div className="cart_link">
-                            <span>1</span>
-                            <Link to="/dashboard/user/user_cart">
-                                My cart
+                        { users.auth ?
+                            <>
+                                <div className="cart_link">
+                                    <span>1</span>
+                                    <Link to="/dashboard/user/user_cart">
+                                        My cart
+                                    </Link>
+                                </div>
+
+                                <Link to="/dashboard">
+                                    My account
+                                </Link>
+                                <span 
+                                    onClick={()=> signOutUser()}
+                                >
+                                    Log out
+                                </span>
+                            </>
+                            :
+
+                            <Link to="/sign_in">
+                                Log in
                             </Link>
-                        </div>
-                        <Link to="/dashboard">
-                                My account
-                        </Link>
-                        <span
-                        onClick = {()=>alert('log out')}
-                        ></span>
-                        <Link to="/sign_in">
-                                Log In
-                        </Link>
-                        </>
+                        }
                     </div>
                     <div className="bottom">
-                        <Link to ="/">
+                        <Link to="/">
                             Home
                         </Link>
-                        <Link to ="/shop">
+                        <Link to="/shop">
                             Shop
                         </Link>
-
                     </div>
-
                 </div>
-
             </div>
         </header>
     )
+
 }
+
 export default Header;

@@ -4,7 +4,8 @@ import { GET_PROD_BY_SOLD,
     ERROR_GLOBAL,
     SUCCESS_GLOBAL,
     CLEAR_NOTIFICATIONS,
-    AUTH_USER
+    AUTH_USER,
+    SIGN_OUT
 } 
     from "../types"
 
@@ -16,6 +17,9 @@ export const userAuthenticate = (user) => (
         payload:user
     }
 )
+export const userSignOut = () => ({
+    type:SIGN_OUT
+})
 
 
 
