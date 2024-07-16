@@ -8,17 +8,21 @@ import { clear_notifications } from '../store/actions/index';
 const MainLayout = (props) => {
     const notifications = useSelector(state => state.notifications);
     const dispatch = useDispatch();
-    const [notificationsCleared, setNotificationsCleared] = useState(false);
+    // const [notificationsCleared, setNotificationsCleared] = useState(false);
 
-    useEffect(() => {
-        if (!notificationsCleared && (notifications.error || notifications.success)) {
-            const type = notifications.error ? 'ERROR' : 'SUCCESS';
-            const msg = notifications.msg ? notifications.msg : type === 'ERROR' ? 'Error' : 'Success';
-            showToast(type, msg);
+   useEffect(()=>{
+        if(notifications && notifications.error){
+            const msg = notifications.msg ? notifications.msg : 'Error';
+            showToast('ERROR',msg);
             dispatch(clear_notifications());
-            setNotificationsCleared(true);
         }
-    }, [notifications, notificationsCleared, dispatch]);
+        if(notifications && notifications.success){
+            const msg = notifications.msg ? notifications.msg : 'Good job !!';
+            showToast('SUCCESS',msg);
+            dispatch(clear_notifications());
+        }
+
+    },[notifications,dispatch])
 
     return (
         <div>

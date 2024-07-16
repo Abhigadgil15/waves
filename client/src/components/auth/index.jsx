@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import Button from '@mui/material/Button';
 import AuthForm from './authForm';
 import * as Yup from 'yup';
-
+import PreventSignInROute from '../../hoc/preventSignInROute';
 const RegisterLogin = (props) => {
     const [formType,setFormType] = useState(false);
 
@@ -10,6 +10,7 @@ const RegisterLogin = (props) => {
         setFormType(!formType)
     }
     return(
+        <PreventSignInROute>
         <div className="page_wrapper">
             <div className="container">
                 <div className="register_login_container">
@@ -45,6 +46,7 @@ const RegisterLogin = (props) => {
                 </div>
             </div>
         </div>
+        </PreventSignInROute>
     )
 }
 export default RegisterLogin;

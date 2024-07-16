@@ -42,6 +42,8 @@ export const userSignIn = (values) => {
 }
 
 export const userisAuth = () =>{
+
+    
     return async(dispatch) =>{
         try{
             if(!getTokenCookie()){
@@ -61,9 +63,32 @@ export const userisAuth = () =>{
 
 //we can also create a model to handle tokens in case the token is incorrect or the token is flagged or expired
 export const userSignOut = () => {
-    return async(dispatch)=>{
+    return async(dispatch)=> {
         removeTokenCookie();
         dispatch(actions.userSignOut())
-        dispatch(actions.successGlobal('Logged Out!!'))
+        dispatch(actions.successGlobal('Good bye !!'))
+        
+    }
+}
+
+export const userUpdateProfile = (data) => {
+    //getState is a cool feature in redux where the redux will temporarily store the input without rendering the component(i.e without user doing any operation on it) 
+    return async(dispatch,getState)=>{
+        try{
+            const profile = await axios.patch('/api/users/profile',{
+                data:data
+            },getAuthHeader());
+
+            const userData = {
+                ...getState().users.data,
+                firstname:profile.data.firstname,
+                lastname:profile.data.lastname,
+            }
+            dispatch(actions.userUpdateProfile(userData));
+            dispatch(actions.successGlobal("Data updated"))
+        }
+        catch(error){
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
     }
 }

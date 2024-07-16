@@ -1,9 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const Header = ({users, signOutUser}) => {
+const Header = ({ users, signOutUser }) => {
+    const navigate = useNavigate();
 
-    return(
+    // Use useEffect to listen for changes in users.auth
+    // useEffect(() => {
+    //     // If the user is signed out, navigate to /dashboard
+    //     if (!users.auth) {
+    //         navigate('/sign_in');
+    //     }
+    // }, [users.auth, navigate]);
+
+    return (
         <header className="bck_b_light">
             <div className="container">
                 <div className="left">
@@ -13,7 +22,7 @@ const Header = ({users, signOutUser}) => {
                 </div>
                 <div className="right">
                     <div className="top">
-                        { users.auth ?
+                        {users.auth ?
                             <>
                                 <div className="cart_link">
                                     <span>1</span>
@@ -25,17 +34,13 @@ const Header = ({users, signOutUser}) => {
                                 <Link to="/dashboard">
                                     My account
                                 </Link>
-                                <span 
-                                    onClick={()=> signOutUser()}
+                                <span
+                                    onClick={() => signOutUser()}
                                 >
                                     Log out
                                 </span>
-                            </>
-                            :
-
-                            <Link to="/sign_in">
-                                Log in
-                            </Link>
+                            </> :
+                            <span onClick={() => navigate('/sign_in')}>Log in</span>
                         }
                     </div>
                     <div className="bottom">
@@ -49,8 +54,7 @@ const Header = ({users, signOutUser}) => {
                 </div>
             </div>
         </header>
-    )
-
-}
+    );
+};
 
 export default Header;

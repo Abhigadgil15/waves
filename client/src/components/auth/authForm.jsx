@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import {errorHelper} from'../../utils/tools'
 import { userRegister,userSignIn } from '../../store/actions/users.actions';
 
+
 const AuthForm = (props) =>{
     const navigate = useNavigate();
     const notifications = useSelector(state=>state.notifications)
@@ -44,7 +45,7 @@ const AuthForm = (props) =>{
             navigate('/dashboard')
         else
             setLoading(false);
-    },[notifications])
+    },[notifications,navigate])
 
 
 
