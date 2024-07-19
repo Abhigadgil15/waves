@@ -92,3 +92,20 @@ export const userUpdateProfile = (data) => {
         }
     }
 }
+
+export const updateUserEmail = (data) => {
+    console.log(data)
+    return async(dispatch)=>{
+        try{
+            await axios.patch(`/api/users/email`,{
+                email: data.email,
+                newemail: data.newemail
+            }, getAuthHeader());
+
+            dispatch(actions.updateUserEmail(data.newemail))
+            dispatch(actions.successGlobal('Good job, Remember to verify your account !!'))
+        } catch(error){
+            dispatch(actions.errorGlobal(error))
+        }
+    }
+}  

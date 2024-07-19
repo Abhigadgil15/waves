@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../../../utils/loader';
 import { errorHelper } from '../../../utils/tools';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     TextField,
     Button,
@@ -12,12 +13,16 @@ import {
     StepLabel
 } from '@mui/material';
 import Modal from 'react-bootstrap/Modal';
+import { updateUserEmail } from '../../../store/actions/users.actions';
 
 const EmailStepper = ({users}) => {
     const [loading, setLoading] = useState(false);
     const [emailModal, setEmailModal] = useState(false);
+    // const [show, setShow] = useState(false);
     const notifications = useSelector(state=> state.notifications);
     const dispatch = useDispatch();
+    const [activeState,setactiveState] = useState(0);
+    const steps = ['Enter old email','Enter new email','Please confirm your email']
 
     const formik = useFormik({
         enableReinitialize:true,
@@ -37,13 +42,41 @@ const EmailStepper = ({users}) => {
             })
         }),
         onSubmit:(values)=>{
-            console.log(values)
+            setLoading(true);
+            dispatch(updateUserEmail(values));
+            
         }
     });
 
 
     const closeModal = () => setEmailModal(false);
     const openModal = () => setEmailModal(true)
+    const handleNext = () => {
+        setactiveState((prevState)=> prevState + 1)
+    }
+    const handleBack= () => {
+        setactiveState((prevState)=> prevState - 1)
+    }
+    const nextBtn = () => (
+        <Button className="mt-3" variant="contained" color="primary" onClick={handleNext}>
+            Next
+        </Button>
+    )
+
+
+    const backBtn = () => (
+        <Button className="mt-3 ml-2" variant="contained" onClick={handleBack}>
+            Back
+        </Button>
+    )
+
+    useEffect(()=>{
+        if( notifications && notifications.success){
+            closeModal();
+        }
+        setLoading(false);
+    },[notifications])
+
 
     return(
         <>
@@ -67,13 +100,80 @@ const EmailStepper = ({users}) => {
                     Edit email
                 </Button>
             </form>
-
+            
             <Modal size="lg" centered show={emailModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Update your email</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    stepper
+                    <form className="mt-3 stepper_form" onSubmit={formik.handleSubmit}>
+                    <Stepper activeStep={activeState}>
+                        {
+                            steps.map((step,index) =>{
+                                return(
+                                    <Step key={step}>
+                                        <StepLabel>{step}</StepLabel>
+                                    </Step>
+                                )
+                            })
+                        }
+                    </Stepper>
+                    {
+                        activeState === 0 ?
+                        <div className='form-group'>
+                            <TextField
+                                style={{width:'100%'}}
+                                name="email"
+                                variant="outlined"
+                                label="Enter your old email"
+                                {...formik.getFieldProps('email')}
+                                {...errorHelper(formik,'email')}  />
+                                {
+                                    formik.values.email && !formik.errors.email ?
+                                    nextBtn()
+                                    :null
+                                }
+                        </div> :null
+                    }
+                    {
+                        activeState === 1 ?
+                        <div className='form-group'>
+                            <TextField
+                                style={{width:'100%'}}
+                                name="newemail"
+                                variant="outlined"
+                                label="Enter your new email"
+                                {...formik.getFieldProps('newemail')}
+                                {...errorHelper(formik,'newemail')}  />
+                                {
+                                    formik.values.newemail && !formik.errors.newemail ?
+                                    nextBtn()
+                                    :null
+                                }{
+                                backBtn()
+                            }
+                        </div> :null
+                    }
+                    { activeState === 2 ?
+                        <div className="form-group">
+                            { loading ?
+                                <Loader/>
+                                :
+                                <>
+                                    <Button
+                                        className="mt-3"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={formik.submitForm}
+                                    >
+                                        Edit email
+                                    </Button>
+                                    {backBtn()}
+                                </>
+                            }
+                        </div>
+                    :null}
+                    </form>
                 </Modal.Body>
             </Modal>
 

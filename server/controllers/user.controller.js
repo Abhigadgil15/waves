@@ -32,7 +32,7 @@ const usersController = {
             const user = await userService.updateUserEmail(req);
             const token = await authService.genAuthToken(user);
 
-            await emailService.registerEmail(user.email,user) // we send this mail whenever email is updated
+            // await emailService.registerEmail(user.email,user) // we send this mail whenever email is updated
             res.cookie('x-access-token',token)
             .send({
                 user,

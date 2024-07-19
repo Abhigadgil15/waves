@@ -28,3 +28,16 @@ export const productsBySort = ({limit,sortBy,order,where}) =>{
     }
 }
 }
+
+export const ProductsByPagination = (args) =>{
+    return async(dispatch) => {
+        try{
+            const products = await axios.post('/api/products/paginate/all',args)
+            dispatch(actions.productsByPagination(products.data))
+            dispatch(actions.successGlobal('Products listed successfully'));
+        }
+        catch(error){
+            dispatch(actions.errorGlobal('Sorry something happened try again'))
+        }
+    }
+}

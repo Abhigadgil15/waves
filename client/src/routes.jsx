@@ -11,8 +11,10 @@ import { userisAuth, userSignOut } from './store/actions/users.actions';
 import UserDashBoard from './components/dashboard';
 import AuthGuard from './hoc/authGuard';
 import UserInfo from './components/dashboard/user/info';
+import Products from './components/dashboard/admin/products/'
 const ProtectedUserDashboard = AuthGuard(UserDashBoard);
 const ProtectedUserInfo = AuthGuard(UserInfo);
+const ProtectedAdmin = AuthGuard(Products);
 const App = (props) => {
   // const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -44,6 +46,7 @@ const App = (props) => {
             signOutUser={signOutUser}
           />
           <Routes>
+            <Route path = "/dashboard/admin/admin_products" element={<ProtectedAdmin/>}/>
             <Route path = "/dashboard/user/user_info" element={<ProtectedUserInfo/>}/>
             <Route path = "/dashboard" element={<ProtectedUserDashboard/>}/>
             <Route path="/sign_in" element={<RegisterLogin />} />

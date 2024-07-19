@@ -6,7 +6,9 @@ import { GET_PROD_BY_SOLD,
     CLEAR_NOTIFICATIONS,
     AUTH_USER,
     SIGN_OUT,
-    UPDATE_USER_PROFILE
+    UPDATE_USER_PROFILE,
+    UPDATE_USER_EMAIL,
+    GET_PROD_BY_PAGINATION 
 } 
     from "../types"
 
@@ -27,6 +29,11 @@ export const userUpdateProfile = (userdata) => ({
     payload:userdata
 })
 
+export const updateUserEmail = (data) => ({
+    type : UPDATE_USER_EMAIL,
+    payload:data
+})
+
 
 
 
@@ -40,6 +47,11 @@ export const productsBySold = (data) =>({
 export const productsByDate = (data) =>({
     type:GET_PROD_BY_DATE,
     payload:data
+})
+
+export const productsByPagination = (args) =>({
+    type:GET_PROD_BY_PAGINATION ,
+    payload:args
 })
 
 
