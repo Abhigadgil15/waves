@@ -19,7 +19,7 @@ const ProductsTable = ({prods}) =>{
             <tbody>
                 {prods.docs.map((item) =>(
                     <tr key={item._id}>
-                        <td><Moment to={item.date}></Moment></td>
+                        <td>{item.date}</td>
                     </tr>
                 ))}
             </tbody>
