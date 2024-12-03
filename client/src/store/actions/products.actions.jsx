@@ -1,5 +1,6 @@
 import axios from "axios"
 import * as actions from './index';
+import { getAuthHeader } from "@/utils/tools";
 // import { config } from 'dotenv';
 // config()
 axios.defaults.baseURL ='http://localhost:3001';
@@ -34,7 +35,21 @@ export const ProductsByPagination = (args) =>{
         try{
             const products = await axios.post('/api/products/paginate/all',args)
             dispatch(actions.productsByPagination(products.data))
-            dispatch(actions.successGlobal('Products listed successfully'));
+            // dispatch(actions.successGlobal('Products listed successfully'));
+        }
+        catch(error){
+            dispatch(actions.errorGlobal('Sorry something happened try again'))
+        }
+    }
+}
+
+export const removeProduct = (id) =>{
+    return async(dispatch) => {
+        try{
+            const products = await axios.delete( `/api/products/product/${id}`,getAuthHeader())
+            // dispatch(actions.productsByPagination(products.data))
+            dispatch(actions.removeProduct());
+            dispatch(actions.successGlobal('Products deleted successfully'));
         }
         catch(error){
             dispatch(actions.errorGlobal('Sorry something happened try again'))

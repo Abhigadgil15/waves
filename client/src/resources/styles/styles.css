@@ -212,10 +212,10 @@ select {
   }
   
   .products_table .remove_btn {
-    background: #dc3545;
+    background: #dc3545; 
   }
   .products_table .remove_btn:hover {
-    background: #ee7782;
+    background: #ee7782; 
   }
   
   .products_table .edit_btn{ 

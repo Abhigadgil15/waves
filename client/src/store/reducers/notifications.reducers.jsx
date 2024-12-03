@@ -1,4 +1,5 @@
-import { ERROR_GLOBAL,SUCCESS_GLOBAL,CLEAR_NOTIFICATIONS } from "../types"
+import { removeProduct } from "../actions"
+import { ERROR_GLOBAL,SUCCESS_GLOBAL,CLEAR_NOTIFICATIONS,REMOVE_PRODUCT } from "../types"
 export default function notificationsReducer(state={},action){
     switch(action.type){
             case ERROR_GLOBAL:
@@ -7,6 +8,8 @@ export default function notificationsReducer(state={},action){
                 return {...state,success:true,msg:action.payload} // we want the existing state of the user having id as MY_DOG
             case CLEAR_NOTIFICATIONS:
                 return {} //since we want to clear all notis we go to default state of nothing
+            case REMOVE_PRODUCT:
+                return {...state, removeProduct : true}
             default:
                 return state
     }
