@@ -1,41 +1,7 @@
-Installations :-
+This project is a Fender Kart prototype developed using the MERN stack (MongoDB, Express, React, Node.js). It integrates various microservices and features, such as real-time inventory tracking and secure payment processing.
 
-- npm init
+The application utilizes Redux for efficient state management, ensuring smooth data flow and enhancing the overall performance. JWT authentication is implemented to securely manage user accounts and sessions. The system also integrates Stripe for secure payment processing, providing a seamless checkout experience for users. Additionally, it allows for dynamic product recommendations, helping to personalize the shopping experience based on user behavior and preferences.
 
-- npm install --save express mongoose dotenv
+To get started with this project, you need to set up the backend and frontend environments. First, ensure that Node.js and npm are installed on your system. After cloning the repository, you will set up the backend and frontend separately. The backend will interact with the database and handle business logic, while the frontend will provide the user interface for customers to interact with the system.
 
-- npm install --save bcrypt jsonwebtoken passport passport-jwt
-
-- npm install --save express-formidable express-mongo-sanitize express-validator
-
-- npm install --save http-status mongoose-aggregate-paginate-v2 xss-clean
-
-- npm install --save cloudinary accesscontrol mailgen
-(To upload images and control roles and send emails)
-
-- npm install -g nodemon
-(To refresh the server)
-
-- npm install -g concurrently
-(To run nserver and client concurrently)
-
-- npm install --save validator
-(To validate data)
-
-- npm i nodemailer
-(to make connections to email)
-
--npm install mailgen --save
-(to make templates for different email applications install if not already installed)
-
-
-- CLIENT 
-1) npm install @mui/material @emotion/react @emotion/styled (MATERIAL UI)
-2) npm install @mui/icons-material @mui/material @emotion/styled @emotion/react (MATERIAL UI ICONS)
-3) npm install --save axios bootstrap formik moment yup (axios for requests, formik for forms and moment for dates, yup for validation)
-4) npm install react-bootstrap bootstrap
-5) npm install react-cookies react-moment
-6) npm install react-redux redux react-router-dom react-router-bootstrap
-7) npm install react-slick react-toastify redux-thunk slick-carousel
-8) npm i @reduxjs/toolkit
-
+Once the setup is complete, both the backend and frontend servers can be started concurrently using the npm run dev command. This will allow you to interact with both the backend and frontend at the same time, providing a complete, real-time experience. The backend handles critical functions such as inventory tracking, payment processing, and user management, while the frontend displays product information, handles user interactions, and provides the interface for checkout.
